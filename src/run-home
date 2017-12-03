@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cd /home/creikey/Documents/projects/pj_software/home/src
+if [ -f "homepid.txt" ]
+then
+	tokill=$(cat homepid.txt)
+	kill "$tokill"
+	rm homepid.txt
+else
+	./home >/dev/null 2>&1 & disown
+	homepid=$!
+	echo -e -n "$homepid" > homepid.txt
+fi

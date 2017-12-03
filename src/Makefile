@@ -1,6 +1,23 @@
+ofiles = main.o draw_time.o world_map.o
 
-home: main.o
-	gcc -o home main.o
+.PHONY: clean
 
-main.o:
+home: $(ofiles)
+	gcc -o home $(ofiles) $(shell pkg-config --libs operomnia)
+
+debug: $(ofiles)
+		gcc -o home_debug $(ofiles) $(shell pkg-config --libs operomnia) -g
+
+world_map.o: world_map.c world_map.h
+	gcc -c world_map.c
+
+main.o: main.c conf.h
 	gcc -c main.c
+
+draw_time.o: draw_time.c draw_time.h
+	gcc -c draw_time.c
+
+clean:
+	-rm home
+	-rm *.o
+	-rm *.gch
