@@ -3,6 +3,8 @@
 
 # Compiled files
 src/home
+src/home_debug
+src/home_static
 
 # Object files
 *.o
