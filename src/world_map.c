@@ -1,29 +1,46 @@
 #include <stdio.h>
 #include <operomnia1/mouse.h>
+#include <operomnia1/memory.h>
 #include <operomnia1/draw/draw.h>
 #include <operomnia1/draw/image.h>
 
 #include "world_map.h"
 
-image * get_world_map() {
-  return load_image( "world_map.png", false, false );
+world_map * get_world_map( operomnia_data * in_data ) {
+  world_map * to_return = malloc (sizeof *to_return);
+  to_return->map_image = load_image( MAP_PATH, false, false );
+  to_return->map_pos = new_vector(0,0);
+  to_return->last_mouse_pos = get_mouse_pos(in_data);
+  to_return->scale = new_vector(1,1);
+  return to_return;
 }
 
-void world_map_input( operomnia_data * in_data, image * in_world_map, float * map_scale ) {
+void world_map_input( operomnia_data * in_data, world_map * in_map ) {
+
+  vector m_pos = get_mouse_pos(in_data);
+  vector mouse_delta = subtract_vectors( m_pos, in_map->last_mouse_pos );
+  in_map->last_mouse_pos = m_pos;
+
+  if( is_key_down( in_data, ALLEGRO_KEY_SPACE ) ) {
+    in_map->map_pos = add_vectors( multiply_vectors( mouse_delta, MOUSE_MULTIPLIER ), in_map->map_pos );
+  }
+  
   if( get_mouse_buttons(in_data).left_button ) {
-    *map_scale += SCALE_FACT;
-    scale_image( in_world_map, *map_scale );
+    in_map->scale.x += SCALE_FACT;
+    in_map->scale.y += SCALE_FACT;
   }
   if( get_mouse_buttons(in_data).right_button ) {
-    *map_scale -= SCALE_FACT;
-    scale_image( in_world_map, *map_scale );
+    in_map->scale.x -= SCALE_FACT;
+    in_map->scale.y -= SCALE_FACT;
   }
+  scale_image( in_map->map_image, in_map->scale );
 }
 
-void draw_world_map( image * in_image ) {
-  draw_image( in_image, new_vector(0,0) );
+void draw_world_map( world_map * in_map ) {
+  draw_image( in_map->map_image, in_map->map_pos );
 }
 
-void destroy_world_map( image * in_map ) {
-  free_image( in_map );
+void destroy_world_map( world_map * in_map ) {
+  free_image( in_map->map_image );
+  op_free( in_map );
 }

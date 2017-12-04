@@ -1,16 +1,26 @@
 #ifndef H_WORLD_MAP
 #define H_WORLD_MAP
 
+#include <operomnia1/operomnia.h>
 #include <operomnia1/draw/draw.h>
 
-image * get_world_map();
+typedef struct _world_map {
+  image * map_image;
+  vector map_pos;
+  vector last_mouse_pos;
+  vector scale;
+} world_map;
 
-void world_map_input( operomnia_data * in_data, image * in_world_map, float * map_scale );
+world_map * get_world_map( operomnia_data * in_data );
 
-void draw_world_map( image * in_image );
+void world_map_input( operomnia_data * in_data, world_map * in_map );
 
-void destroy_world_map( image * in_map );
+void draw_world_map( world_map * in_map );
+
+void destroy_world_map( world_map * in_map );
 
 #define SCALE_FACT 0.05
+#define MAP_PATH "world_map.png"
+#define MOUSE_MULTIPLIER new_vector(2,2)
 
 #endif

@@ -45,20 +45,19 @@ int main( int argc, char ** argv ) {
 }
 
 font * time_font;
-image * world_map;
-float world_map_size = 1;
+world_map * map;
 
 void home_init( operomnia_data * in_data ) {
   time_font = load_font( "atwriter.ttf", TIME_SIZE );
-  world_map = get_world_map();
+  map = get_world_map( in_data );
   //time_font->al_font = al_load_font( "atwriter.ttf",  0, 72 );
 }
 
 void home_loop( operomnia_data * in_data ) {
   clear_color( new_color(BG_COLOR) );
 
-  world_map_input( in_data, world_map, &world_map_size );
-  draw_world_map( world_map );
+  world_map_input( in_data, map );
+  draw_world_map( map );
 
   draw_time( time_font );
 
@@ -66,6 +65,6 @@ void home_loop( operomnia_data * in_data ) {
 }
 
 void home_exit( operomnia_data * in_data ) {
-  destroy_world_map( world_map );
+  destroy_world_map( map );
   destroy_font( time_font );
 }
