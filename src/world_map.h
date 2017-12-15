@@ -6,6 +6,7 @@
 
 typedef struct _world_map {
   image * map_image;
+  vector dims;
   vector map_pos;
   vector last_mouse_pos;
   vector scale;
@@ -17,10 +18,12 @@ void world_map_input( operomnia_data * in_data, world_map * in_map );
 
 void draw_world_map( world_map * in_map );
 
+vector find_map_center( world_map * in_map );
+
 void destroy_world_map( world_map * in_map );
 
-#define SCALE_FACT 0.05
-#define MAP_PATH "world_map.png"
+#define SCALE_FACT 0.01
+#define MAP_PATH "world_pol_2015-1.png"
 #define MOUSE_MULTIPLIER new_vector(2,2)
 
 #endif
