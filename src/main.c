@@ -59,6 +59,9 @@ void home_loop( operomnia_data * in_data ) {
   world_map_input( in_data, map );
   draw_world_map( map );
 
+  vector map_center = find_map_center( map );
+  draw_rectangle_filled( map_center, a_v(map_center,v(50,50)), new_color(255,0,0) );
+
   draw_time( time_font );
 
   draw_all();
