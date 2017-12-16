@@ -35,7 +35,7 @@ void world_map_input( operomnia_data * in_data, world_map * in_map ) {
     in_map->map_pos = add_vectors( multiply_vectors( mouse_delta, MOUSE_MULTIPLIER ), in_map->map_pos );
   }
 
-  if( get_mouse_buttons(in_data).left_button ) {\
+  if( get_mouse_buttons(in_data).left_button ) {
     //in_map->map_pos = subtract_vectors( in_map->map_pos, new_vector(SCALE_FACT*(in_map->map_pos.x),SCALE_FACT*(in_map->map_pos.y)) );
     //vector scale_movement = v( (SCALE_FACT*in_map->dims.x)/2, (SCALE_FACT*in_map->dims.y)/2 );
     vector prev_center = find_map_center( in_map );
